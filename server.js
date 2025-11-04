@@ -69,10 +69,11 @@ const htmlTemplate = readFileSync(`${__dirname}/index.html`, 'utf-8')
 const server = createServer((req, res) => {
   const { pathname } = parse(req.url, true)
   if (pathname === '/') {
-    const renderedHtml = renderToString(<Home />)
+    const renderedReact = renderToString(<Home />)
+    const html = htmlTemplate.replace('%%%CONTENT%%%', renderedReact)
 
     res.writeHead(200, { 'Content-Type': 'text/html' })
-    res.end(renderedHtml)
+    res.end(html)
   } else if (pathname === '/test') {
     res.end('TEST!')
   } else {
